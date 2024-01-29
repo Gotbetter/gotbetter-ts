@@ -8,7 +8,9 @@
       "@api/*": ["src/api/*"],
       "@utils/*": ["src/utils/*"],
       "@screens/*": ["src/screens/*"],
-      "@hooks/*": ["src/hooks/*"]
+      "@hooks/*": ["src/hooks/*"],
+      "@styles/*": ["src/styles/*"],
+      "@navigations/*": ["src/navigations/*"]
     }
   }
 }
