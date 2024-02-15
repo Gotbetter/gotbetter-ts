@@ -10,12 +10,12 @@ import { Controller, useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 type FormData = {
-  userId: string;
+  username: string;
   password: string;
   passwordConfirm: string;
   nickname: string;
 
-  userIdValidated: boolean;
+  usernameValidated: boolean;
   nicknameValidated: boolean;
 };
 
@@ -23,7 +23,7 @@ type FormData = {
  * 폼 데이터 외 validation 데이터
  */
 type AdditionalValidationData = {
-  userId: boolean;
+  username: boolean;
   nickname: boolean;
 };
 
@@ -36,7 +36,7 @@ const SignUpForm = () => {
    * 아이디 중복확인, 닉네임 중복확인 여부
    */
   const initalState: AdditionalValidationData = {
-    userId: false,
+    username: false,
     nickname: false,
   };
 
@@ -52,7 +52,7 @@ const SignUpForm = () => {
   const { control, setError, handleSubmit, getValues, trigger, reset } =
     useForm<FormData>({
       defaultValues: {
-        userId: "",
+        username: "",
         password: "",
         passwordConfirm: "",
         nickname: "",
@@ -106,9 +106,9 @@ const SignUpForm = () => {
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 409) {
         switch (valueName) {
-          case "userId":
-            setError("userId", {
-              type: "duplicatedUserId",
+          case "username":
+            setError("username", {
+              type: "duplicatedUsername",
               message: "중복된 아이디입니다.",
             });
             break;
@@ -133,7 +133,12 @@ const SignUpForm = () => {
 
   const onSubmit = async (data: FormData) => {
     setDialogVisible(true);
-    const { passwordConfirm, ...signupRequest } = data;
+    const {
+      passwordConfirm,
+      usernameValidated,
+      nicknameValidated,
+      ...signupRequest
+    } = data;
     try {
       setIsLoading(true);
       await signup(signupRequest);
@@ -159,7 +164,7 @@ const SignUpForm = () => {
     <View style={styles.formContainer}>
       <View style={styles.inputContainer}>
         <Controller
-          name="userId"
+          name="username"
           control={control}
           rules={{
             required: "아이디를 입력해주세요.",
@@ -170,7 +175,7 @@ const SignUpForm = () => {
             },
             validate: {
               duplicateCheckRequired: () =>
-                duplicateChecked.userId
+                duplicateChecked.username
                   ? true
                   : "아이디 중복확인이 필요합니다.",
             },
@@ -179,7 +184,7 @@ const SignUpForm = () => {
             <Input
               value={value}
               onChangeText={(text) =>
-                onChangeCheckDuplicateText("userId", text, onChange)
+                onChangeCheckDuplicateText("username", text, onChange)
               }
               maxLength={20}
               inputContainerStyle={styles.input}
@@ -189,11 +194,11 @@ const SignUpForm = () => {
               errorMessage={error?.message}
               rightIcon={
                 <Button
-                  title={duplicateChecked.userId ? "확인완료" : "중복확인"}
+                  title={duplicateChecked.username ? "확인완료" : "중복확인"}
                   buttonStyle={styles.duplicateButton}
                   titleStyle={styles.duplicateButtonTitle}
-                  onPress={() => onSubmitCheckDuplicate("userId")}
-                  disabled={duplicateChecked.userId}
+                  onPress={() => onSubmitCheckDuplicate("username")}
+                  disabled={duplicateChecked.username}
                   disabledStyle={styles.disabledButton}
                   disabledTitleStyle={styles.disabledButtonTitle}
                 />
@@ -251,7 +256,7 @@ const SignUpForm = () => {
             maxLength: 20,
             pattern: {
               value:
-                /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':",./<>?])[A-Za-z\d!@#$%^&*()_+\-=[\]{};':",./<>?]{8,16}$/,
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+\\|{};:'",<.>/?])[A-Za-z\d!@#$%^&*()-_=+\\|{};:'",<.>/?]{8,16}$/,
               message:
                 "8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.",
             },

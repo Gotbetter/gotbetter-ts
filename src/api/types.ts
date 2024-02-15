@@ -1,17 +1,26 @@
 type SignUpRequest = {
-  userId: string;
+  username: string;
   password: string;
   nickname: string;
+};
+type LoginRequest = {
+  username: string;
+  password: string;
+};
+
+type LoginResponse = {
+  accessToken: string;
+  refreshToken: string;
 };
 
 type SignUpResponse = {
   id: number;
-  userId: string;
+  username: string;
   nickname: string;
 };
 
 type CheckDuplicateParam = {
-  userId?: string;
+  username?: string;
   nickname?: string;
 };
 
@@ -19,4 +28,11 @@ type APIResponse<T> = {
   data: T;
 };
 
-export { SignUpRequest, SignUpResponse, APIResponse, CheckDuplicateParam };
+export {
+  SignUpRequest,
+  LoginRequest,
+  SignUpResponse,
+  LoginResponse,
+  APIResponse,
+  CheckDuplicateParam,
+};
