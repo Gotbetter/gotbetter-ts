@@ -1,17 +1,17 @@
 type SignUpRequest = {
-  userId: string;
+  username: string;
   password: string;
   nickname: string;
 };
 
 type SignUpResponse = {
   id: number;
-  userId: string;
+  username: string;
   nickname: string;
 };
 
 type CheckDuplicateParam = {
-  userId?: string;
+  username?: string;
   nickname?: string;
 };
 
