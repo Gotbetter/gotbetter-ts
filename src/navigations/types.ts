@@ -6,12 +6,17 @@ import {
 type RootStackParamList = {
   Start: undefined;
   Auth: NavigatorScreenParams<AuthParamList>;
-  Home: undefined;
+  Home: NavigatorScreenParams<HomeParamList>;
 };
 
 type AuthParamList = {
   Login: undefined;
   SignUp: undefined;
+  Home: NavigatorScreenParams<HomeParamList>;
+};
+
+type HomeParamList = {
+  Main: undefined;
 };
 
 type StartScreenNavigationProp = NavigationProp<RootStackParamList>;
@@ -27,6 +32,7 @@ declare global {
 export {
   RootStackParamList,
   AuthParamList,
+  HomeParamList,
   StartScreenNavigationProp,
   AuthScreenNavigationProp,
 };
