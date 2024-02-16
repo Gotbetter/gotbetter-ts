@@ -140,10 +140,10 @@ const LoginScreen = () => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  fullScreen: { flex: 1 },
+  fullScreen: { flex: 1, backgroundColor: "white" },
   rootContainer: {
     height: hp("100%"),
-    backgroundColor: "white",
+
     justifyContent: "center",
     alignItems: "center",
 
